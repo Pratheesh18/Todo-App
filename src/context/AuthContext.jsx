@@ -1,8 +1,7 @@
-import React , {Children, createContext , useContext , useState} from 'react';
+import React , { createContext , useContext , useState} from 'react';
 
 const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({children}) => {
     const [currentUser , setCurrentUser] = useState(localStorage.getItem('currentUser'));
@@ -17,9 +16,15 @@ export const AuthProvider = ({children}) => {
         localStorage.removeItem('currentUser');
     };
 
+    const isAuthenticated = !!currentUser;
+
     return(
-        <AuthContext.Provider value={{currentUser,login,logout}}>
+        <AuthContext.Provider value={{currentUser,isAuthenticated,login,logout}}>
             {children}
         </AuthContext.Provider>
     )
-}
+};
+
+
+
+export const useAuth = () => useContext(AuthContext);
