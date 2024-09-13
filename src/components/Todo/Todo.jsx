@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import {
   Button,
   Modal,
@@ -6,6 +6,7 @@ import {
   Typography,
   Stack,
   Box,
+  TextField
 } from "@mui/material";
 import AddTodo from "./AddTodo";
 import TodoCard from "./TodoCard";
@@ -17,12 +18,15 @@ const Todo = () => {
   const [todos, setTodos] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editTodo, setEditTodo] = useState(null);
+  const [filteredTodos , setFilteredTodos] = useState([]);
+  const [searchTerm , setSearchTerm] = useState('');
 
   useEffect(() => {
     if (currentUser) {
       const savedTodos =
         JSON.parse(localStorage.getItem(`todos_${currentUser}`)) || [];
       setTodos(savedTodos);
+      setFilteredTodos(savedTodos);
     }
   }, [currentUser]);
 
@@ -63,7 +67,35 @@ const Todo = () => {
     setTodos(
         todos.map((todo) => todo.id === id ? {...todo,completed:!todo.completed} : todo)
     )
+  };
+
+  const debounce = (func,delay) => {
+    let timeoutId;
+    return (...args) => {
+        if(timeoutId){
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+            func(...args);
+        },delay);
+    };
+  };
+
+  const handleSearch = useCallback(
+    debounce((query) => {
+        const filtered = todos.filter((todo) => todo.title.toLowerCase().includes(query.toLowerCase()));
+        setFilteredTodos(filtered);
+    },500), [todos]
+  );
+
+  const handleClose = () => {
+    setModalOpen(false);
+    setEditTodo(null);
   }
+
+  useEffect(() => {
+    handleSearch(searchTerm);
+  },[searchTerm,handleSearch]);
 
   if (!currentUser) {
     return <Typography variant="h6">Loading...</Typography>;
@@ -83,14 +115,23 @@ const Todo = () => {
         >
           Add Todo
         </Button>
+       
       </Box>
-      {todos.length === 0 ? (
+      <TextField
+          fullWidth
+          label="Search Todos"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          variant="outlined"
+          sx={{marginTop:'15px'}}
+        />
+      {filteredTodos.length === 0 ? (
         <Typography variant="h6" color="textSecondary">
           No Todos
         </Typography>
       ) : (
         <Stack spacing={2} mt={4}>
-          {todos.map((todo) => (
+          {filteredTodos.map((todo) => (
             <TodoCard
               key={todo.id}
               todo={todo}
@@ -109,7 +150,7 @@ const Todo = () => {
           alignItems="center"
           height="100vh"
         >
-          <AddTodo onSave={saveTodo} editTodo={editTodo} />
+          <AddTodo onSave={saveTodo} editTodo={editTodo} onClose={handleClose} />
         </Box>
       </Modal>
     </Container>

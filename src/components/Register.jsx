@@ -1,3 +1,4 @@
+import React , {useState} from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,9 +9,12 @@ import {
   Typography,
   Container,
   Box,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { useNavigate , Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Visibility,VisibilityOff } from "@mui/icons-material";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -23,6 +27,7 @@ const schema = yup.object().shape({
 
 const Register = () => {
   const navigate = useNavigate();
+  const [showPassword , setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -38,6 +43,10 @@ const Register = () => {
     toast.success('User Registered Successfully ',{position:'bottom-right'})
     navigate("/login");
 };
+
+   const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+   }
 
     return (
       <Container maxWidth="sm">
@@ -66,11 +75,20 @@ const Register = () => {
               <TextField
                 fullWidth
                 label="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 {...register("password")}
                 error={!!errors.password}
                 helperText={errors.password?.message}
                 variant="outlined"
+                InputProps={{
+                  endAdornment:(
+                    <InputAdornment position='end'>
+                      <IconButton onClick={handleClickShowPassword} edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
               <Button
                 type="submit"

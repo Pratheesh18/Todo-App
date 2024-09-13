@@ -15,8 +15,7 @@ const TodoCard = ({ todo, onDelete, onEdit, onCompletion }) => {
   return (
     <Card
       sx={{
-        bgcolor: todo.completed ? "lightgreen" : "white",
-        textDecoration: todo.completed ? "line-through" : "none",
+        bgcolor: todo.completed ? "	#0096FF" : "white",
       }}
     >
       <CardContent>
@@ -34,6 +33,9 @@ const TodoCard = ({ todo, onDelete, onEdit, onCompletion }) => {
         >
           {todo.completed ? <Cancel /> : <CheckCircle />}
         </IconButton>
+        <Typography variant="body2" >
+            {todo.completed ? "Remove marked as completed" : 'Mark as completed'}
+        </Typography>
         {!todo.completed && (
           <Button onClick={onEdit} startIcon={<Edit />} color="primary">
             {" "}

@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from './components/Login';
 import Register from './components/Register';
 import Todo from './components/Todo/Todo';
+import './App.css';
 
 
 function App() {
