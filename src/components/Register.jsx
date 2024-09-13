@@ -9,7 +9,7 @@ import {
   Container,
   Box,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -73,13 +73,17 @@ const Register = () => {
               <Button
                 type="submit"
                 variant="contained"
-                color="prinary"
+                color="primary"
                 fullWidth
               >
                 Register
               </Button>
             </Stack>
           </Box>
+          <Typography align="center" mt={2}>
+            Already Have an account ?
+            <Link to="/login" style={{color:'blue',textDecoration:'none'}}> Login  </Link>
+          </Typography>
         </Box>
       </Container>
     );

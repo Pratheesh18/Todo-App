@@ -54,6 +54,12 @@ const Todo = () => {
     setModalOpen(true);
   };
 
+  const toggleCompletion = (id) => {
+    setTodos(
+        todos.map((todo) => todo.id === id ? {...todo,completed:!todo.completed} : todo)
+    )
+  }
+
   if (!currentUser) {
     return <Typography variant="h6">Loading...</Typography>;
   }
@@ -62,7 +68,7 @@ const Todo = () => {
     <Container maxWidth="md">
       <Box mt={5} textAlign="center">
         <Typography variant="h4" gutterBottom>
-          {`${currentUser}'s Todo List`}
+          {`${currentUser.name}'s Todo List`}
         </Typography>
         <Button
           variant="contained"
@@ -84,6 +90,7 @@ const Todo = () => {
               todo={todo}
               onDelete={deleteTodo}
               onEdit={() => handleEditTodo(todo)}
+              onCompletion={toggleCompletion}
             />
           ))}
         </Stack>

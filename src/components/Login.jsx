@@ -23,7 +23,7 @@ const Login = () => {
         if(storedUser){
             const userData = JSON.parse(storedUser);
             if(userData.password === password){
-                login(email);
+                login(userData);
                 navigate('/todo');
             }else{
                 alert('Invalid password');
