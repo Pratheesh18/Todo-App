@@ -10,6 +10,7 @@ import {
   Box,
 } from "@mui/material";
 import { useNavigate , Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -34,6 +35,7 @@ const Register = () => {
       `user_${email}`,
       JSON.stringify({ name, email, password })
     );
+    toast.success('User Registered Successfully ',{position:'bottom-right'})
     navigate("/login");
 };
 

@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { TextField , Button , Typography,Container,Box,Stack } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
     email : yup.string().email('Invalid email').required('Email is required'),
@@ -24,12 +25,13 @@ const Login = () => {
             const userData = JSON.parse(storedUser);
             if(userData.password === password){
                 login(userData);
+                toast.success('Login Successful',{position:'bottom-right'})
                 navigate('/todo');
             }else{
-                alert('Invalid password');
+                toast.error('Invalid Password',{position:'bottom-right'})
             }
         }else{
-            alert('User not found');
+            toast.error('User not found !',{position:'bottom-right'})
         }
     };
 

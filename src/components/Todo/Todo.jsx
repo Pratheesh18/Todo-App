@@ -10,6 +10,7 @@ import {
 import AddTodo from "./AddTodo";
 import TodoCard from "./TodoCard";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Todo = () => {
   const { currentUser } = useAuth();
@@ -35,18 +36,22 @@ const Todo = () => {
     try {
       if (editTodo) {
         setTodos(todos.map((item) => (item.id === editTodo.id ? todo : item)));
+        toast.success('Todo updated successfully !',{position:'bottom-right'})
       } else {
         setTodos([...todos, { id: Date.now(), ...todo }]);
+        toast.success('Todo added successfully !',{position:'bottom-right'})
       }
       setModalOpen(false);
       setEditTodo(null);
     } catch (error) {
       console.error('Error saving todo:', error);
+      toast.error('Error saving todo',{position:'bottom-right'})
     }
   };
 
   const deleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
+    toast.success('Todo deleted successfully!',{position:'bottom-right'})
   };
 
   const handleEditTodo = (todo) => {
@@ -66,7 +71,7 @@ const Todo = () => {
 
   return (
     <Container maxWidth="md">
-      <Box mt={5} textAlign="center">
+      <Box mt={5} display="flex" justifyContent="space-between"  textAlign="center" flexDirection={{xs:'column',sm:'row'}}>
         <Typography variant="h4" gutterBottom>
           {`${currentUser.name}'s Todo List`}
         </Typography>
@@ -74,6 +79,7 @@ const Todo = () => {
           variant="contained"
           color="primary"
           onClick={() => setModalOpen(true)}
+          sx={{ mt: { xs: 2, sm: 0 } }}
         >
           Add Todo
         </Button>
