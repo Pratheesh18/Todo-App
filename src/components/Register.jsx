@@ -36,12 +36,18 @@ const Register = () => {
 
   const onSubmit = (data) => {
     const { name, email, password } = data;
-    localStorage.setItem(
-      `user_${email}`,
-      JSON.stringify({ name, email, password })
-    );
-    toast.success('User Registered Successfully ',{position:'bottom-right'})
-    navigate("/login");
+    const existingUser = localStorage.getItem(`user_${email}`); //user with same email can't register
+    if(existingUser){
+      toast.error("User with this email already exists !",{position:'bottom-right'});
+    }else{
+      localStorage.setItem(
+        `user_${email}`,
+        JSON.stringify({ name, email, password })
+      );
+      toast.success('User Registered Successfully ',{position:'bottom-right'})
+      navigate("/login");
+    }
+   
 };
 
    const handleClickShowPassword = () => {
