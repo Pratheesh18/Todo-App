@@ -12,14 +12,12 @@ export const AuthProvider = ({children}) => {
     useEffect(() => {
         if(currentUser){
             localStorage.setItem('currentUser',JSON.stringify(currentUser));
-            console.log("Userss",currentUser)
         }else{
             localStorage.removeItem('currentUser');
         }
     },[currentUser])
 
     const login = (user) => {
-        console.log("User",user)
         setCurrentUser(user);
     };
 
