@@ -1,8 +1,17 @@
-# React + Vite
+This project is built using Vite to provide fast development and optimized production builds for React applications <br/>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Prerequisites** <br/>
 
-Currently, two official plugins are available:
+1.Node JS(v16 or higher) <br/>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2.npm(or yarn if you prefer)
+
+**Running the Application Locally** <br/>
+
+1. Clone the repository -> git clone <br/>
+2. Install Dependencies -> npm install <br/>
+3. Start the development server -> npm run dev <br/>
+
+This app will be available at http://localhost:3000
+
+
