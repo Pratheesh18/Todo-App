@@ -126,7 +126,7 @@ const Todo = () => {
           sx={{marginTop:'15px'}}
         />
       {filteredTodos.length === 0 ? (
-        <Typography variant="h6" color="textSecondary">
+        <Typography mt={2} align="center" variant="h6" color="textSecondary">
           No Todos
         </Typography>
       ) : (

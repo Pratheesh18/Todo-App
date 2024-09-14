@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
@@ -95,6 +95,10 @@ const Login = () => {
             </Button>
           </Stack>
         </Box>
+        <Typography align="center" mt={2}>
+          Don't Have an account ?
+          <Link to="/" style={{color:'blue',textDecoration:'none'}} > Register </Link>
+        </Typography>
       </Box>
     </Container>
   );
